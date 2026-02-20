@@ -1,29 +1,42 @@
-import { Link } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useContext } from "react";
+import { Pressable, Text, View } from "react-native";
+import { TaskContext } from "../context/TaskContext";
+import { globalStyles } from "../styles/globalStyles";
 
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+export default function Modal() {
+  const router = useRouter();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const taskContext = useContext(TaskContext);
 
-export default function ModalScreen() {
+  if (!taskContext || !id) return null;
+
+  const { deleteTask } = taskContext;
+
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText type="title">This is a modal</ThemedText>
-      <Link href="/" dismissTo style={styles.link}>
-        <ThemedText type="link">Go to home screen</ThemedText>
-      </Link>
-    </ThemedView>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.subtitle}>
+        Are you sure you want to delete this task?
+      </Text>
+
+      <View style={globalStyles.buttonRow}>
+        <Pressable
+          style={[globalStyles.button, globalStyles.buttonDelete]}
+          onPress={() => {
+            deleteTask(id);
+            router.back();
+          }}
+        >
+          <Text style={globalStyles.buttonText}>Yes</Text>
+        </Pressable>
+
+        <Pressable
+          style={[globalStyles.button, globalStyles.buttonEdit]}
+          onPress={() => router.back()}
+        >
+          <Text style={globalStyles.buttonText}>Cancel</Text>
+        </Pressable>
+      </View>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-});

@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useContext } from "react";
-import { Alert, Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { TaskContext } from "../context/TaskContext";
 import { globalStyles } from "../styles/globalStyles";
 
@@ -10,14 +10,7 @@ export default function Tasks() {
 
   if (!taskContext) return null;
 
-  const { tasks, doneTasks, markDone, deleteTask } = taskContext;
-
-  const handleDelete = (taskId: string) => {
-    Alert.alert("Delete Task", "Are you sure you want to delete this task?", [
-      { text: "Cancel", style: "cancel" },
-      { text: "Yes", style: "destructive", onPress: () => deleteTask(taskId) },
-    ]);
-  };
+  const { tasks, doneTasks, markDone } = taskContext;
 
   return (
     <ScrollView
@@ -63,7 +56,9 @@ export default function Tasks() {
                 globalStyles.buttonRowItem,
                 globalStyles.buttonDelete,
               ]}
-              onPress={() => handleDelete(task.id)}
+              onPress={() =>
+                router.push({ pathname: "/modal", params: { id: task.id } })
+              }
             >
               <Text style={globalStyles.buttonText}>Delete</Text>
             </Pressable>
@@ -81,7 +76,9 @@ export default function Tasks() {
 
           <Pressable
             style={globalStyles.buttonCompletedDelete}
-            onPress={() => handleDelete(task.id)}
+            onPress={() =>
+              router.push({ pathname: "/modal", params: { id: task.id } })
+            }
           >
             <Text style={globalStyles.buttonText}>Delete</Text>
           </Pressable>
