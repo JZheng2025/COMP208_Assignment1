@@ -14,28 +14,38 @@ export default function Modal() {
   const { deleteTask } = taskContext;
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.subtitle}>
-        Are you sure you want to delete this task?
-      </Text>
+    <View style={globalStyles.modalOverlay}>
+      <View style={globalStyles.modalBox}>
+        <Text style={globalStyles.subtitle}>
+          Are you sure you want to delete this task?
+        </Text>
 
-      <View style={globalStyles.buttonRow}>
-        <Pressable
-          style={[globalStyles.button, globalStyles.buttonDelete]}
-          onPress={() => {
-            deleteTask(id);
-            router.back();
-          }}
-        >
-          <Text style={globalStyles.buttonText}>Yes</Text>
-        </Pressable>
+        <View style={globalStyles.buttonRow}>
+          <Pressable
+            style={[
+              globalStyles.button,
+              globalStyles.buttonDelete,
+              globalStyles.modalButton,
+            ]}
+            onPress={() => {
+              deleteTask(id);
+              router.back();
+            }}
+          >
+            <Text style={globalStyles.buttonText}>Yes</Text>
+          </Pressable>
 
-        <Pressable
-          style={[globalStyles.button, globalStyles.buttonEdit]}
-          onPress={() => router.back()}
-        >
-          <Text style={globalStyles.buttonText}>Cancel</Text>
-        </Pressable>
+          <Pressable
+            style={[
+              globalStyles.button,
+              globalStyles.buttonEdit,
+              globalStyles.modalButton,
+            ]}
+            onPress={() => router.back()}
+          >
+            <Text style={globalStyles.buttonText}>Cancel</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );

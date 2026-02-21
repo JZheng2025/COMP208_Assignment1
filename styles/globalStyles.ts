@@ -121,4 +121,22 @@ export const globalStyles = StyleSheet.create({
   buttonCreateNewTask: {
     marginTop: 60,
   },
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.4)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalBox: {
+    width: "85%",
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 12,
+  },
+
+  modalButton: {
+    flex: 1,
+  },
 });
